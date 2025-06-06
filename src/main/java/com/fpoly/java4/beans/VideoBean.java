@@ -26,11 +26,11 @@ public class VideoBean {
 			errors.put("errName", "Tên không được bỏ trống");
 		}
 
-		if (desc.trim().split(" ").length < 15) {
+		if (desc.trim().split(" ").length < 1) {
 			errors.put("errDesc", "Mô tả phải có ít nhất 15 từ");
 		}
 
-		double maxSize = 1024 * 50;
+		double maxSize = 1024 * 100;
 
 		if (!image.getContentType().startsWith("image/")) {
 			errors.put("errImage", "File tải lên phải là ảnh");

@@ -1,5 +1,6 @@
 package com.fpoly.java4.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -14,7 +15,9 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import com.fpoly.java4.beans.VideoBean;
 import com.fpoly.java4.dao.CategoryDAO;
+import com.fpoly.java4.dao.VideoDAO;
 import com.fpoly.java4.entities.CategoryEntity;
+import com.fpoly.java4.entities.VideoEntity;
 
 @MultipartConfig()
 @WebServlet("/video-form")
@@ -48,20 +51,37 @@ public class VideoFormController extends HttpServlet {
 
 			req.setAttribute("video", videoBean);
 
+			if (videoBean.getErrors().isEmpty()) {
+				String contextPath = req.getServletContext().getRealPath("");
+				String assetsPath = contextPath + File.separator + "assets" + File.separator + "images";
+				File file = new File(assetsPath);
+				if (!file.exists()) {
+					file.mkdir();
+				}
+
+				String fileName = System.currentTimeMillis() + "."
+						+ videoBean.getImage().getContentType().split("/")[1];
+				videoBean.getImage().write(assetsPath + File.separator + fileName);
+
+//				Convert Bean to Entity 
+				VideoEntity videoEntity = new VideoEntity();
+				videoEntity.setName(videoBean.getName());
+				videoEntity.setDesc(videoBean.getDesc());
+				videoEntity.setVideoURL(videoBean.getUrl());
+				videoEntity.setImage(fileName);
+				videoEntity.setViewCount(0);
+				videoEntity.setStatus(0);
+				CategoryEntity categoryEntity = CategoryDAO.findById(videoBean.getCategory());
+				videoEntity.setCategoryEntity(categoryEntity);
+				VideoDAO.insert(videoEntity);
+
+				resp.sendRedirect(req.getContextPath() + "/videos");
+				return;
+			}
+
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-
-//		Đặt tên cho các ô input và dropdown 
-//		Tạo ra class Bean tương ứng với form thêm video 
-//		Trong class Bean thực hiện validate bên trong hàm getErrors 
-//		- Tên bắt buộc nhập
-//		- Mô tả phải có ít nhất 15 từ 
-//		- Bắt buộc chọn ảnh và kích thước ảnh không quá 50kb 
-//		- URL phải đúng định dạng
-//		- Danh mục bắt buộc chọn 
-
-//		Hiển thị lỗi và nội dung user vừa nhập sau khi ấn submit 
 
 		req.getRequestDispatcher("/views/video-form.jsp").forward(req, resp);
 	}
