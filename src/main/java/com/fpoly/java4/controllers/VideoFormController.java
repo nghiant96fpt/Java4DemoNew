@@ -44,11 +44,8 @@ public class VideoFormController extends HttpServlet {
 
 		try {
 			VideoBean videoBean = new VideoBean();
-//			populate của bean chỉ parse được dữ liệu kiểu chuỗi và số 
 			BeanUtils.populate(videoBean, req.getParameterMap());
-
 			videoBean.setImage(req.getPart("image"));
-
 			req.setAttribute("video", videoBean);
 
 			if (videoBean.getErrors().isEmpty()) {
@@ -63,7 +60,6 @@ public class VideoFormController extends HttpServlet {
 						+ videoBean.getImage().getContentType().split("/")[1];
 				videoBean.getImage().write(assetsPath + File.separator + fileName);
 
-//				Convert Bean to Entity 
 				VideoEntity videoEntity = new VideoEntity();
 				videoEntity.setName(videoBean.getName());
 				videoEntity.setDesc(videoBean.getDesc());
