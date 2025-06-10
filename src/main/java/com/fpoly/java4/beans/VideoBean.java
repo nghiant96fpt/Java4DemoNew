@@ -13,11 +13,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class VideoBean {
+	private int id;
 	private String name;
 	private String desc;
 	private Part image;
 	private String url;
 	private int category;
+	private int status;
 
 	public Map<String, String> getErrors() {
 		Map<String, String> errors = new HashMap<String, String>();

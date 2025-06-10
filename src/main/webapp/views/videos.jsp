@@ -33,26 +33,26 @@
 					</tr>
 				</thead>
 				<tbody>
-				<c:forEach items="${videos}" var="item">
-					<tr>
-						<td>${item.id}</td>
-						<td>${item.name}</td>
-						<td>${item.desc}</td>
-						<td>
-							<img src="${pageContext.request.contextPath}/assets/images/${item.image}" style="width: 100px; height: 100px"/>
-						</td>
-						<td>
-							<!-- làm sao để khi click vào thẻ a sẽ mở 1 tab mới với url của href   -->
-							<a href="${item.videoURL}" target="_blank">${item.videoURL}</a>
-						</td>
-						<td>${item.viewCount}</td>
-						<td>${item.categoryEntity.name}</td>
-						<td>${item.status == 0 ? 'Inactive' : 'Active'}</td>
-					</tr>
-				</c:forEach>
-					<!-- Hiên thị  danh sách video theo theo các thông tin trên 
-					ID, Tên, Mô tả, Hình ảnh (img), url (a), lượt xem, tên danh mục,
-					trạng thái     -->
+					<c:forEach items="${videos}" var="item">
+						<tr>
+							<td>${item.id}</td>
+							<td>${item.name}</td>
+							<td>${item.desc}</td>
+							<td>
+								<img src="${pageContext.request.contextPath}/assets/images/${item.image}" style="width: 100px; height: 100px"/>
+							</td>
+							<td>
+								<a href="${item.videoURL}" target="_blank">${item.videoURL}</a>
+							</td>
+							<td>${item.viewCount}</td>
+							<td>${item.categoryEntity.name}</td>
+							<td>${item.status == 0 ? 'Inactive' : 'Active'}</td>
+							<td>
+								<a href="${pageContext.request.contextPath}/video-form?id=${item.id}" class="btn btn-warning">Sửa</a>
+								<a href="" class="btn btn-danger">Xoá</a>
+							</td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 		</div>

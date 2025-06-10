@@ -31,6 +31,24 @@ public class VideoFormController extends HttpServlet {
 		List<CategoryEntity> categoryEntities = CategoryDAO.findAll();
 		req.setAttribute("categories", categoryEntities);
 
+		try {
+			String id = req.getParameter("id");
+			VideoEntity videoEntity = VideoDAO.findById(Integer.parseInt(id));
+
+			VideoBean videoBean = new VideoBean();
+			videoBean.setId(videoEntity.getId());
+			videoBean.setName(videoEntity.getName());
+			videoBean.setDesc(videoEntity.getDesc());
+			videoBean.setUrl(videoEntity.getVideoURL());
+			videoBean.setCategory(videoEntity.getCategoryEntity().getId());
+			videoBean.setStatus(videoEntity.getStatus());
+
+			req.setAttribute("video", videoBean);
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
 		req.getRequestDispatcher("/views/video-form.jsp").forward(req, resp);
 	}
 
@@ -69,7 +87,14 @@ public class VideoFormController extends HttpServlet {
 				videoEntity.setStatus(0);
 				CategoryEntity categoryEntity = CategoryDAO.findById(videoBean.getCategory());
 				videoEntity.setCategoryEntity(categoryEntity);
-				VideoDAO.insert(videoEntity);
+
+				if (videoBean.getId() != 0) {
+					videoEntity.setStatus(videoBean.getStatus());
+					videoEntity.setId(videoBean.getId());
+					VideoDAO.update(videoEntity);
+				} else {
+					VideoDAO.insert(videoEntity);
+				}
 
 				resp.sendRedirect(req.getContextPath() + "/videos");
 				return;

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,48 +18,73 @@
 			<form method="POST"
 				action="${pageContext.request.contextPath}/video-form"
 				enctype="multipart/form-data">
+				<c:if test="${video.id != null && video.id != 0}">
+					<input type="hidden" name="id" value="${video.id}"/>
+				</c:if>
 				<div class="mb-3 text-start">
-				  <label class="form-label">Tên video </label>
-				  <input value="${video.name}" name="name" type="text" class="form-control" id="exampleFormControlInput1">
+					<label class="form-label">Tên video </label> <input
+						value="${video.name}" name="name" type="text" class="form-control"
+						id="exampleFormControlInput1">
 				</div>
 				<div class="mb-3 text-start">
-				  <label class="form-label">Mô tả </label>
-				  <textarea name="desc" class="form-control" id="exampleFormControlTextarea1" rows="5">${video.desc}</textarea>
+					<label class="form-label">Mô tả </label>
+					<textarea name="desc" class="form-control"
+						id="exampleFormControlTextarea1" rows="5">${video.desc}</textarea>
 				</div>
 				<div class="mb-3 text-start">
-				  <label class="form-label">Ảnh video</label>
-				  <input name="image" type="file" class="form-control" id="exampleFormControlInput1">
+					<label class="form-label">Ảnh video</label> <input name="image"
+						type="file" class="form-control" id="exampleFormControlInput1">
 				</div>
 				<div class="mb-3 text-start">
-				  <label class="form-label">URL</label>
-				  <input value="${video.url}" name="url" type="text" class="form-control" id="exampleFormControlInput1">
+					<label class="form-label">URL</label> <input value="${video.url}"
+						name="url" type="text" class="form-control"
+						id="exampleFormControlInput1">
 				</div>
-				
+
 				<div class="mb-3 text-start">
-				  <label class="form-label">Danh mục</label>
-				  <select name="category" class="form-select" aria-label="Default select example">
-					  <c:choose>
-					  	<c:when test="${video == null}">
-					  		<option selected value="-1">--------Chọn danh mục-------</option>
-					  	</c:when>
-					  	<c:otherwise>
-					  		<option value="-1">--------Chọn danh mục-------</option>
-					  	</c:otherwise>
-					  </c:choose>
-					  
-					  <c:forEach items="${categories}" var="item">
-					  	<c:choose>
-						  	<c:when test="${video.category == item.id}">
-						  		<option selected value="${item.id}">${item.name}</option>
-						  	</c:when>
-						  	<c:otherwise>
-						  		<option value="${item.id}">${item.name}</option>
-						  	</c:otherwise>
-						  </c:choose>
-					  </c:forEach>
+					<label class="form-label">Danh mục</label> <select name="category"
+						class="form-select" aria-label="Default select example">
+						<c:choose>
+							<c:when test="${video == null}">
+								<option selected value="-1">--------Chọn danh
+									mục-------</option>
+							</c:when>
+							<c:otherwise>
+								<option value="-1">--------Chọn danh mục-------</option>
+							</c:otherwise>
+						</c:choose>
+
+						<c:forEach items="${categories}" var="item">
+							<c:choose>
+								<c:when test="${video.category == item.id}">
+									<option selected value="${item.id}">${item.name}</option>
+								</c:when>
+								<c:otherwise>
+									<option value="${item.id}">${item.name}</option>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
 					</select>
-				 </div>
-				
+				</div>
+
+				<c:if test="${video.id != null && video.id != 0}">
+					<div class="mb-3 text-start">
+						<label class="form-label">Trạng thái</label>
+						<div class="form-check">
+							<!-- c:choose  -->
+							<!-- ? :  -->
+							<input name="status" value="1" class="form-check-input" type="radio"
+								id="radioDefault1" ${video.status == 1 ? 'checked' : ''}>
+							<label class="form-check-label" for="radioDefault1">Hiển thị</label>
+						</div>
+						<div class="form-check">
+							<input name="status" value="0" class="form-check-input" type="radio"
+								id="radioDefault2" ${video.status != 1 ? 'checked' : ''}>
+							<label class="form-check-label" for="radioDefault2">Ẩn</label>
+						</div>
+					</div>
+				</c:if>
+
 				<button type="submit" class="btn btn-primary">Thêm video</button>
 			</form>
 		</div>
