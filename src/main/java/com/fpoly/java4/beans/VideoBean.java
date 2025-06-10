@@ -34,10 +34,16 @@ public class VideoBean {
 
 		double maxSize = 1024 * 100;
 
-		if (!image.getContentType().startsWith("image/")) {
-			errors.put("errImage", "File tải lên phải là ảnh");
-		} else if (image.getSize() > maxSize) {
-			errors.put("errImage", "File tải lên không lớn hơn 50KB");
+//		Điều kiện để thực hiện kiểm tra hình ảnh
+//		Thực hiện chức năng thêm
+//		Khi thực hiện sửa nhưng mà có upload hình ảnh lên 
+
+		if (id == 0 || image != null) {
+			if (!image.getContentType().startsWith("image/")) {
+				errors.put("errImage", "File tải lên phải là ảnh");
+			} else if (image.getSize() > maxSize) {
+				errors.put("errImage", "File tải lên không lớn hơn 50KB");
+			}
 		}
 
 		if (!url.matches(

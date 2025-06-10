@@ -67,22 +67,30 @@ public class VideoFormController extends HttpServlet {
 			req.setAttribute("video", videoBean);
 
 			if (videoBean.getErrors().isEmpty()) {
-				String contextPath = req.getServletContext().getRealPath("");
-				String assetsPath = contextPath + File.separator + "assets" + File.separator + "images";
-				File file = new File(assetsPath);
-				if (!file.exists()) {
-					file.mkdir();
-				}
+				String fileName = "";
+				if (videoBean.getId() == 0 || videoBean.getImage() != null) {
+					String contextPath = req.getServletContext().getRealPath("");
+					String assetsPath = contextPath + File.separator + "assets" + File.separator + "images";
+					File file = new File(assetsPath);
+					if (!file.exists()) {
+						file.mkdir();
+					}
 
-				String fileName = System.currentTimeMillis() + "."
-						+ videoBean.getImage().getContentType().split("/")[1];
-				videoBean.getImage().write(assetsPath + File.separator + fileName);
+					fileName = System.currentTimeMillis() + "." + videoBean.getImage().getContentType().split("/")[1];
+					videoBean.getImage().write(assetsPath + File.separator + fileName);
+				}
 
 				VideoEntity videoEntity = new VideoEntity();
 				videoEntity.setName(videoBean.getName());
 				videoEntity.setDesc(videoBean.getDesc());
 				videoEntity.setVideoURL(videoBean.getUrl());
-				videoEntity.setImage(fileName);
+//				Nếu có lưu ảnh sẽ tên ảnh mới
+//				Nếu không lưu thì tên ảnh từ DB 
+				if (videoBean.getId() == 0) {
+					videoEntity.setImage(fileName);
+				} else {
+//				Lấy tên ảnh từ db để set vào image 
+				}
 				videoEntity.setViewCount(0);
 				videoEntity.setStatus(0);
 				CategoryEntity categoryEntity = CategoryDAO.findById(videoBean.getCategory());
