@@ -89,7 +89,12 @@ public class VideoFormController extends HttpServlet {
 				if (videoBean.getId() == 0) {
 					videoEntity.setImage(fileName);
 				} else {
-//				Lấy tên ảnh từ db để set vào image 
+					if (!fileName.equals("")) {
+						videoEntity.setImage(fileName);
+					} else {
+						VideoEntity videoEntityDB = VideoDAO.findById(videoBean.getId());
+						videoEntity.setImage(videoEntityDB.getImage());
+					}
 				}
 				videoEntity.setViewCount(0);
 				videoEntity.setStatus(0);

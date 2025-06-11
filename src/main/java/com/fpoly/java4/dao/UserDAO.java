@@ -19,13 +19,18 @@ public class UserDAO {
 	}
 
 	public static UserEntity findByUsername(String username) {
-		EntityManager entityManager = EntityManagerConfig.getEntityManager();
+		try {
+			EntityManager entityManager = EntityManagerConfig.getEntityManager();
 
-		String sqlQuery = "SELECT * FROM users WHERE username='" + username + "'";
+			String sqlQuery = "SELECT * FROM users WHERE username='" + username + "'";
 
-		Query query = entityManager.createNativeQuery(sqlQuery, UserEntity.class);
+			Query query = entityManager.createNativeQuery(sqlQuery, UserEntity.class);
 
-		return (UserEntity) query.getSingleResult();
+			return (UserEntity) query.getSingleResult();
+		} catch (Exception e) {
+
+			return null;
+		}
 	}
 
 	public static UserEntity findById(int id) {
