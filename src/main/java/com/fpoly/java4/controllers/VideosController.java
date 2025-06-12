@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +23,20 @@ public class VideosController extends HttpServlet {
 
 		List<VideoEntity> videoEntities = VideoDAO.findAll();
 		req.setAttribute("videos", videoEntities);
+
+//		Lấy user id từ Cookie ra 
+
+		Cookie[] cookies = req.getCookies();
+
+		if (cookies != null) {
+			String userId = null;
+			for (Cookie cookie : cookies) {
+
+				if (cookie.getName().equals("user_id")) {
+					userId = cookie.getValue();
+				}
+			}
+		}
 
 		req.getRequestDispatcher("/views/videos.jsp").forward(req, resp);
 	}
