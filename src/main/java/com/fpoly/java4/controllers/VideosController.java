@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.fpoly.java4.dao.VideoDAO;
 import com.fpoly.java4.entities.VideoEntity;
 
-@WebServlet("/videos")
+@WebServlet("/admin/videos")
 public class VideosController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

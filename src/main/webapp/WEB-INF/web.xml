@@ -5,4 +5,9 @@
         <servlet-name>default</servlet-name>  
         <url-pattern>/assets/*</url-pattern>  
     </servlet-mapping>
+    
+    <filter-mapping>
+		<filter-name>adminFilter</filter-name>
+		<url-pattern />
+	</filter-mapping>
 </web-app>

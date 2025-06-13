@@ -20,7 +20,7 @@ import com.fpoly.java4.entities.CategoryEntity;
 import com.fpoly.java4.entities.VideoEntity;
 
 @MultipartConfig()
-@WebServlet("/video-form")
+@WebServlet("/admin/video-form")
 public class VideoFormController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
