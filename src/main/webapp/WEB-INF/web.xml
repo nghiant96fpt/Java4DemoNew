@@ -6,8 +6,8 @@
         <url-pattern>/assets/*</url-pattern>  
     </servlet-mapping>
     
-    <filter-mapping>
+    <!-- <filter-mapping>
 		<filter-name>adminFilter</filter-name>
 		<url-pattern />
-	</filter-mapping>
+	</filter-mapping> -->
 </web-app>
