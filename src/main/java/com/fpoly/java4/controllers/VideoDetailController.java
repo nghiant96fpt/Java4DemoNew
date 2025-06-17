@@ -21,6 +21,8 @@ public class VideoDetailController extends HttpServlet {
 			String id = req.getParameter("id");
 			VideoEntity videoEntity = VideoDAO.findById(Integer.parseInt(id));
 
+			System.out.println(videoEntity.getCommentEntities().size());
+
 			req.setAttribute("video", videoEntity);
 
 		} catch (Exception e) {
