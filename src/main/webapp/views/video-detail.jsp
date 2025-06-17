@@ -31,6 +31,25 @@
 			</div>
 			<hr/>
 		</c:forEach>
+		
+		<br/>
+		
+		<form method="POST"
+			action="${pageContext.request.contextPath}/add-comment"
+			enctype="multipart/form-data">
+			<input type="hidden" name="videoId" value="${video.id}">
+			<div class="mb-3 text-start">
+			  <label class="form-label">Nội dung bình luận</label>
+			  <input name="content" type="text" class="form-control">
+			</div>
+			
+			<div class="mb-3 text-start">
+				<label class="form-label">Ảnh bình luận</label>
+				<input name="image" type="file" multiple class="form-control">
+			</div>
+			
+			<button type="submit" class="btn btn-primary">Bình luận</button>
+		</form>
 	</div>
 
 	<script
